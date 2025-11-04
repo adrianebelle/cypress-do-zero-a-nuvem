@@ -61,7 +61,7 @@ function showAndHideErrorMessage() {
   return
 }
 
-function hideMessageAfterTimeout(element,) {
+function hideMessageAfterTimeout(elemento) {
   setTimeout(function() {
     element.style.display = 'none' 
   }, 3000)
