@@ -265,7 +265,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .click()
   })
 
-  it.only('acessa a página da política de privacidade removendo o target e então clicando no link', () => {
+  it('acessa a página da política de privacidade removendo o target e então clicando no link', () => {
     cy.get('a[href="privacy.html"]')
       .invoke('removeAttr', 'target')
       .click()
