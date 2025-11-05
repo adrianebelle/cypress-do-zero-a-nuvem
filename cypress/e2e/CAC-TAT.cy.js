@@ -265,10 +265,11 @@ describe('Central de Atendimento ao Cliente TAT', () => {
       .click()
   })
 
-  it('acessa a página da política de privacidade removendo o target e então clicando no link', () => {
+  it.only('acessa a página da política de privacidade removendo o target e então clicando no link', () => {
     cy.get('a[href="privacy.html"]')
       .invoke('removeAttr', 'target')
       .click()
+    cy.location('pathname').should('eq', '/src/privacy.html')
     cy.contains('h1', 'CAC TAT - Política de Privacidade')
       .should('be.visible')
   })
