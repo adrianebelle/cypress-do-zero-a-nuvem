@@ -4,7 +4,9 @@ module.exports = defineConfig({
   viewportHeight: 880,
   viewportWidth: 1280,
   e2e: {}, //indica que é um projeto E2E
+  projectId: "g32ppd"
   
 })
+
 
 //video: true //após execução headless é criado a pasta videos, com os vídeos das execuções
