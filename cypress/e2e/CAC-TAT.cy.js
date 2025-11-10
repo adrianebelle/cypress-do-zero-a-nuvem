@@ -273,7 +273,94 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     cy.contains('h1', 'CAC TAT - Política de Privacidade')
       .should('be.visible')
   })
+
+  Cypress._.times(3, () => {
+    it('verifica a mensagem de sucesso usando a funcionalidade Cypress._times', () => {
+      const data = {
+        nome: 'Paula',
+        sobrenome: 'Reis',
+        email: 'paula.reis@teste.com',
+        texto: 'Paula está aprendendo Cypress'
+      }
+      cy.fillMandatoryFieldsAndSubmitObject(data)
+
+      cy.get('.success')
+        .should('contain', 'Mensagem enviada com sucesso.')
+        .should('be.visible')
+    })
+  })
+
+  it('verifica se a mensagem de sucesso aparece e desaparece após 3 segundos', () => {
+    const data = {
+      nome: 'Paula',
+      sobrenome: 'Reis',
+      email: 'paula.reis@teste.com',
+      texto: 'Paula está aprendendo Cypress'
+    }
+    cy.clock()
+    cy.fillMandatoryFieldsAndSubmitObject(data)
+
+    cy.get('.success')
+      .should('contain', 'Mensagem enviada com sucesso.')
+      .should('be.visible')
+
+    cy.tick(3000)
+
+    cy.get('.success')
+      .should('not.be.visible')
+  })
+
+  it('exibe e oculta as mensagens de sucesso e erro usando .invoke()', () => {
+    cy.get('.success')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Mensagem enviada com sucesso.')
+      .invoke('hide')
+      .should('not.be.visible')
+    cy.get('.error')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Valide os campos obrigatórios!')
+      .invoke('hide')
+      .should('not.be.visible')
+  })
+
+  it('preenche o campo da área de texto usando o comando invoke', () => {
+    cy.get('#open-text-area')
+      .invoke('val', 'Teste preenchendo o campo texto usando invoke')
+      .should('be.value', 'Teste preenchendo o campo texto usando invoke')
+  })
+
+  it('faz uma requisição HTTP GET', () => {
+    cy.request('GET', 'https://cac-tat-v3.s3.eu-central-1.amazonaws.com/index.html')
+      .as('getRequest')
+    // cy.get('@getRequest').should((response) => {
+    //   expect(response.status).to.equal(200)
+    //   expect(response.statusText).to.contain('OK')
+    //   expect(response.body).to.include('CAC TAT')
+    // })
+      .its('status')
+      .should('be.equal', 200)
+
+      cy.get('@getRequest')
+        .its('statusText')
+        .should('be.equal', 'OK')
+      cy.get('@getRequest')
+        .its('body')
+        .should('include', 'CAC TAT')
+  })
+
+  it('encontra o gato escondido', () => {
+    cy.get('#cat')
+      .invoke('show')
+      .should('be.visible')
+    cy.get('#title')
+      .invoke('text', 'CAT TAT')
+  })
 })
+
 
 
 
